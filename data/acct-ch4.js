@@ -40,7 +40,7 @@ window.COURSE_DATA.push({
       '<li>Journalize and post <strong>closing entries</strong></li>' +
       '<li>Prepare a <strong>post-closing trial balance</strong></li>' +
       '</ol>' +
-      '<div class="tip">💡 Mnemonic anchor: <em>journal → ledger → trial balance → adjust → statements → close</em>. The financial statements are the most important output of the cycle.</div>' },
+      '<div class="tip">Mnemonic anchor: <em>journal → ledger → trial balance → adjust → statements → close</em>. The financial statements are the most important output of the cycle.</div>' },
     { title: 'Why GAAP Requires Accrual Accounting', html:
       '<p>The cash basis records transactions only when cash moves — simple, but it can badly distort performance across periods (revenue lands when collected, not when earned; expenses land when paid). The accrual basis applies the revenue and expense recognition principles so each period’s income statement reflects what was actually earned and incurred — making periods comparable and preventing manipulation via payment timing.</p>' },
     { title: 'Analysis: Working Capital & Current Ratio', html:

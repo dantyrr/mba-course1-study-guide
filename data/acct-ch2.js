@@ -19,7 +19,7 @@ window.COURSE_DATA.push({
       '<tr><td>Drawing</td><td>Debit</td><td>Credit</td><td>Debit</td></tr>' +
       '<tr><td>Revenues</td><td>Credit</td><td>Debit</td><td>Credit</td></tr>' +
       '<tr><td>Expenses</td><td>Debit</td><td>Credit</td><td>Debit</td></tr></table></div>' +
-      '<div class="tip">💡 Memory aid: accounts that <em>increase equity</em> (capital, revenue) grow with <strong>credits</strong>; accounts that <em>decrease equity</em> (drawing, expenses) grow with <strong>debits</strong>. The <span class="term">normal balance</span> is whichever side records increases.</div>' },
+      '<div class="tip">Memory aid: accounts that <em>increase equity</em> (capital, revenue) grow with <strong>credits</strong>; accounts that <em>decrease equity</em> (drawing, expenses) grow with <strong>debits</strong>. The <span class="term">normal balance</span> is whichever side records increases.</div>' },
     { title: 'Journalizing', html:
       '<p>Transactions are first recorded chronologically in the <span class="term">journal</span> — the record of when transactions occurred. Steps for each entry:</p>' +
       '<ol><li>Enter the <strong>date</strong>.</li>' +
@@ -35,7 +35,7 @@ window.COURSE_DATA.push({
       '<li><strong>Unequal totals</strong> → an error definitely exists; retrace from the last entry.</li>' +
       '<li><strong>Equal totals ≠ proof of accuracy</strong>: some errors don’t break the equality — e.g., entering a correct entry twice, posting to the wrong account, or omitting a transaction entirely. Errors already journalized and posted are fixed with a <span class="term">correcting journal entry</span>.</li>' +
       '</ul>' +
-      '<div class="tip">💡 If the difference between column totals is evenly divisible by 9, suspect a <strong>transposition</strong> (writing $542 as $452) or a <strong>slide</strong> (writing $542.00 as $54.20).</div>' },
+      '<div class="tip">If the difference between column totals is evenly divisible by 9, suspect a <strong>transposition</strong> (writing $542 as $452) or a <strong>slide</strong> (writing $542.00 as $54.20).</div>' },
     { title: 'Analysis: Horizontal Analysis', html:
       '<p><span class="term">Horizontal analysis</span> compares each item on a financial statement with the <em>same item in an earlier period</em> — amount of change and percent change:</p>' +
       '<div class="formula">% change = (Current period − Prior period) ÷ Prior period × 100</div>' +

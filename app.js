@@ -4,8 +4,8 @@
 
   var CHAPTERS = window.COURSE_DATA || [];
   var SUBJECTS = {
-    econ: { name: 'Economics', sub: 'Principles of Economics (Mankiw, 10e)', icon: '📈', cls: 'econ' },
-    acct: { name: 'Accounting', sub: 'Accounting (Warren, 29e)', icon: '🧾', cls: 'acct' }
+    econ: { name: 'Economics', sub: 'Principles of Economics (Mankiw, 10e)', cls: 'econ' },
+    acct: { name: 'Accounting', sub: 'Accounting (Warren, 29e)', cls: 'acct' }
   };
   var app = document.getElementById('app');
 
@@ -71,7 +71,7 @@
         '</a></li>';
     }).join('');
     return '<section class="subject-card ' + s.cls + '">' +
-      '<h2><span class="badge">' + s.icon + '</span>' + s.name + '</h2>' +
+      '<h2><span class="badge">' + (key === 'econ' ? 'ECON' : 'ACCT') + '</span>' + s.name + '</h2>' +
       '<p class="sub">' + esc(s.sub) + '</p>' +
       '<div class="pbar ' + (key === 'acct' ? 'acct-bar' : '') + '"><div style="width:' + avg + '%"></div></div>' +
       '<p class="pbar-label">' + avg + '% complete</p>' +
@@ -98,15 +98,15 @@
     var prev = chs[idx - 1], next = chs[idx + 1];
 
     var tabs = [
-      { key: 'notes', label: '📖 Notes', count: ch.sections.length },
-      { key: 'cards', label: '🃏 Flashcards', count: ch.terms.length },
-      { key: 'quiz', label: '✅ Quiz', count: ch.quiz.length }
+      { key: 'notes', label: 'Notes', count: ch.sections.length },
+      { key: 'cards', label: 'Flashcards', count: ch.terms.length },
+      { key: 'quiz', label: 'Quiz', count: ch.quiz.length }
     ];
     app.innerHTML =
       '<div class="' + (ch.subject === 'acct' ? 'acct-page' : 'econ-page') + '">' +
       '<p class="crumbs"><a href="#/">Home</a> › <a href="#/subject/' + ch.subject + '">' + s.name + '</a> › Chapter ' + ch.num + '</p>' +
       '<header class="ch-header">' +
-      '<span class="kicker ' + s.cls + '-k">' + s.icon + ' ' + s.name + ' · Chapter ' + ch.num + '</span>' +
+      '<span class="kicker ' + s.cls + '-k">' + s.name + ' · Chapter ' + ch.num + '</span>' +
       '<h1>' + esc(ch.title) + '</h1>' +
       '<p class="overview">' + ch.overview + '</p></header>' +
       '<nav class="tabs">' + tabs.map(function (t) {
@@ -163,7 +163,7 @@
       if (pos >= deck.length) {
         var mastered = chState(ch.id).mastered.length;
         body.innerHTML = '<div class="fc-wrap"><div class="fc-summary">' +
-          '<div class="big">🎉 Deck complete</div>' +
+          '<div class="big">Deck complete</div>' +
           '<p>You marked <strong>' + knownThisRun + '</strong> of ' + deck.length + ' cards as known this round.<br>' +
           'Total mastered: <strong>' + mastered + '/' + ch.terms.length + '</strong></p>' +
           '<div class="chip-row">' +
@@ -192,7 +192,7 @@
         '<div class="fc-face back"><span class="label">Definition</span><div class="def">' + esc(c.def) + '</div></div>' +
         '</div></div>' +
         '<div class="fc-controls">' +
-        '<button class="fc-btn again" id="fcAgain">↻ Still learning</button>' +
+        '<button class="fc-btn again" id="fcAgain">Still learning</button>' +
         '<button class="fc-btn" id="fcSkip">Skip</button>' +
         '<button class="fc-btn know" id="fcKnow">✓ I know this</button>' +
         '</div></div>';
@@ -230,7 +230,7 @@
         var st = chState(ch.id);
         if (st.bestQuiz === null || score > st.bestQuiz) { st.bestQuiz = score; setChState(ch.id, st); }
         var pct = Math.round(score / qs.length * 100);
-        var msg = pct >= 90 ? 'Outstanding — exam ready! 🏆' :
+        var msg = pct >= 90 ? 'Outstanding — exam ready.' :
                   pct >= 70 ? 'Solid work — review the ones you missed.' :
                   'Keep going — reread the notes and try again.';
         body.innerHTML = '<div class="quiz-wrap"><div class="q-card q-result">' +

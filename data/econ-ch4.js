@@ -33,7 +33,7 @@ window.COURSE_DATA.push({
       '<tr><td>Technology improves</td><td>Supply ↑ (right shift)</td></tr>' +
       '<tr><td>Expected future price ↑</td><td>Supply ↓ today</td></tr>' +
       '<tr><td>Number of sellers ↑</td><td>Supply ↑</td></tr></table></div>' +
-      '<div class="tip">💡 Again: the good’s own price causes a <em>movement along</em> the supply curve, never a shift of it.</div>' },
+      '<div class="tip">Again: the good’s own price causes a <em>movement along</em> the supply curve, never a shift of it.</div>' },
     { title: 'Equilibrium', html:
       '<p><span class="term">Equilibrium</span> is where the supply and demand curves intersect: quantity buyers want to buy exactly equals quantity sellers want to sell. That price is the <span class="term">equilibrium price</span>; that quantity is the <span class="term">equilibrium quantity</span>.</p>' +
       '<ul>' +
@@ -56,7 +56,7 @@ window.COURSE_DATA.push({
       '<tr><td>Demand ↓ &amp; Supply ↑</td><td>↓</td><td>ambiguous</td></tr>' +
       '<tr><td>Both ↑</td><td>ambiguous</td><td>↑</td></tr>' +
       '<tr><td>Both ↓</td><td>ambiguous</td><td>↓</td></tr></table></div>' +
-      '<div class="tip">💡 When both curves shift, one of price or quantity is always <em>ambiguous</em> — it depends on the relative size of the shifts.</div>' },
+      '<div class="tip">When both curves shift, one of price or quantity is always <em>ambiguous</em> — it depends on the relative size of the shifts.</div>' },
     { title: 'Conclusion: Prices Allocate Resources', html:
       '<p>In market economies, <strong>prices are signals</strong> that guide decisions and allocate scarce resources. For every good, the price adjusts to balance supply and demand, determining how much buyers consume and sellers produce.</p>' }
   ],

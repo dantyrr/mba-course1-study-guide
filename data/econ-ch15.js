@@ -28,7 +28,7 @@ window.COURSE_DATA.push({
       '<tr><td>AVC &lt; P &lt; ATC</td><td>Operate in short run (covers variable costs), but exit in long run</td></tr>' +
       '<tr><td>P &gt; ATC</td><td>Stay and enjoy profit</td></tr></table></div>' +
       '<p>Hence the firm’s <strong>short-run supply curve</strong> is the MC curve above AVC; its <strong>long-run supply curve</strong> is the MC curve above ATC.</p>' +
-      '<div class="tip">💡 <span class="term">Sunk costs</span> — costs already committed and unrecoverable — should be ignored. In the short run, fixed costs are sunk, which is why they don’t matter for the shutdown decision (this is why a store can rationally stay open all night even with few customers: rent is sunk; only variable costs matter).</div>' },
+      '<div class="tip"><span class="term">Sunk costs</span> — costs already committed and unrecoverable — should be ignored. In the short run, fixed costs are sunk, which is why they don’t matter for the shutdown decision (this is why a store can rationally stay open all night even with few customers: rent is sunk; only variable costs matter).</div>' },
     { title: 'Measuring Profit and Loss', html:
       '<div class="formula">Profit = (P − ATC) × Q&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Loss = (ATC − P) × Q</div>' +
       '<p>Graphically, profit is the rectangle between price and ATC at the chosen quantity (where P = MC). If P is between AVC and ATC, the firm operates at a loss in the short run but minimizes that loss by producing where P = MC.</p>' },

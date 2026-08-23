@@ -30,7 +30,7 @@ window.COURSE_DATA.push({
       '<li><strong>Elastic demand:</strong> price and total revenue move in <em>opposite</em> directions (price ↑ → revenue ↓).</li>' +
       '<li><strong>Unit elastic:</strong> a price change leaves total revenue unchanged.</li>' +
       '</ul>' +
-      '<div class="tip">💡 Along a <strong>linear</strong> demand curve, the slope is constant but the elasticity is NOT: demand is elastic at high-price/low-quantity points and inelastic at low-price/high-quantity points.</div>' },
+      '<div class="tip">Along a <strong>linear</strong> demand curve, the slope is constant but the elasticity is NOT: demand is elastic at high-price/low-quantity points and inelastic at low-price/high-quantity points.</div>' },
     { title: 'Other Demand Elasticities', html:
       '<ul>' +
       '<li><span class="term">Income elasticity of demand</span> = %ΔQ ÷ %Δincome. <strong>Normal goods: positive</strong>; <strong>inferior goods: negative</strong>.</li>' +

@@ -13,7 +13,7 @@ window.COURSE_DATA.push({
       '<li><span class="term">3. Rational people think at the margin.</span> Rational people compare <span class="term">marginal benefits</span> and <span class="term">marginal costs</span> of small, incremental changes. Act only when MB &gt; MC. (Your $8/month streaming subscription is already paid — the marginal cost of one more movie is just your time.)</li>' +
       '<li><span class="term">4. People respond to incentives.</span> An <span class="term">incentive</span> is anything that induces action. Because rational people weigh costs and benefits, changing those costs or benefits changes behavior — sometimes with unintended consequences.</li>' +
       '</ul>' +
-      '<div class="tip">💡 <strong>Sunk cost trap:</strong> money already spent (like $2,000 of past repairs on a car) is irrelevant to the decision at hand. Compare only the <em>future</em> marginal benefit and marginal cost.</div>' },
+      '<div class="tip"><strong>Sunk cost trap:</strong> money already spent (like $2,000 of past repairs on a car) is irrelevant to the decision at hand. Compare only the <em>future</em> marginal benefit and marginal cost.</div>' },
     { title: 'How People Interact (Principles 5–7)', html:
       '<ul>' +
       '<li><span class="term">5. Trade can make everyone better off.</span> Trade lets people and countries specialize in what they do best and enjoy a greater variety of goods at lower cost. Trade is not a contest with one winner.</li>' +
