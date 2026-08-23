@@ -1,9 +1,12 @@
 # MBA Course 1 Study Guide
 
+## &#9658; Open the study guide: **https://dantyrr.github.io/mba-course1-study-guide/**
+
 Interactive study site for Course 1 (Economics + Accounting): chapter notes, flashcards, and practice quizzes.
 
-**Live site:** https://dantyrr.github.io/mba-course1-study-guide/
+- **Economics** — Principles of Economics (Mankiw 10e): Chapters 1, 2, 4, 5, 15
+- **Accounting** — Accounting (Warren 29e): Chapters 1–4
 
-Original study content covering topics from Principles of Economics (Mankiw 10e) chapters 1, 2, 4, 5, 15 and Accounting (Warren 29e) chapters 1–4. Progress (notes read, flashcards mastered, best quiz scores) is stored in the browser via localStorage.
+Original study content (notes, 148 flashcards, 99 quiz questions). Progress — notes read, flashcards mastered, best quiz scores — is saved privately in your browser via localStorage.
 
-Plain HTML/CSS/JS — no build step. Open `index.html` or serve the folder.
+Plain HTML/CSS/JS, no build step. To run locally, open `index.html` or serve the folder.
