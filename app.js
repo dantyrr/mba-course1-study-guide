@@ -4,9 +4,11 @@
 
   var CHAPTERS = window.COURSE_DATA || [];
   var SUBJECTS = {
-    econ: { name: 'Economics', sub: 'Principles of Economics (Mankiw, 10e)', cls: 'econ' },
-    acct: { name: 'Accounting', sub: 'Accounting (Warren, 29e)', cls: 'acct' }
+    acct: { name: 'Accounting', sub: 'Accounting (Warren, 29e) — Chapters 1–4', tag: 'ACCT', cls: 'acct', note: 'On your current test', hasExam: true },
+    econ: { name: 'Economics', sub: 'Principles of Economics (Mankiw, 10e)', tag: 'ECON', cls: 'econ', note: 'Not on the current test', hasExam: false }
   };
+  var SUBJECT_ORDER = ['acct', 'econ'];
+  var EXAM_SIZE = 25;
   var app = document.getElementById('app');
 
   /* ---------- progress store ---------- */
@@ -17,18 +19,19 @@
   function saveStore(s) { localStorage.setItem(KEY, JSON.stringify(s)); }
   function chState(id) {
     var s = loadStore();
-    return s[id] || { read: false, mastered: [], bestQuiz: null };
+    return s[id] || { read: false, mastered: [], bestQuiz: null, bestBank: null };
   }
   function setChState(id, st) {
     var s = loadStore(); s[id] = st; saveStore(s);
   }
   function chPct(ch) {
     var st = chState(ch.id);
-    var parts = 0;
+    var parts = 0, total = ch.bank && ch.bank.length ? 4 : 3;
     if (st.read) parts++;
     if (ch.terms.length && st.mastered.length >= ch.terms.length) parts++;
     if (st.bestQuiz !== null && st.bestQuiz >= Math.ceil(ch.quiz.length * 0.7)) parts++;
-    return Math.round(parts / 3 * 100);
+    if (ch.bank && ch.bank.length && st.bestBank !== null && st.bestBank >= Math.ceil(ch.bank.length * 0.7)) parts++;
+    return Math.round(parts / total * 100);
   }
 
   function esc(t) {
@@ -46,13 +49,15 @@
       renderChapter(byId(parts[1]), parts[2] || 'notes');
     } else if (parts[0] === 'subject' && SUBJECTS[parts[1]]) {
       renderHome(parts[1]);
+    } else if (parts[0] === 'exam' && SUBJECTS[parts[1]] && SUBJECTS[parts[1]].hasExam) {
+      renderExam(parts[1]);
     } else {
       renderHome(null);
     }
   }
   window.addEventListener('hashchange', route);
 
-  /* ---------- home ---------- */
+  /* ---------- home / subject pages ---------- */
   function subjectCard(key) {
     var s = SUBJECTS[key];
     var chs = subjectChapters(key);
@@ -60,9 +65,12 @@
     var items = chs.map(function (c) {
       var st = chState(c.id), pct = chPct(c);
       var meta = [];
-      meta.push(st.read ? '<span class="done">✓ notes</span>' : 'notes');
-      meta.push(st.mastered.length >= c.terms.length ? '<span class="done">✓ cards</span>' : st.mastered.length + '/' + c.terms.length + ' cards');
-      meta.push(st.bestQuiz !== null ? (st.bestQuiz >= Math.ceil(c.quiz.length * 0.7) ? '<span class="done">✓ quiz ' : '<span>quiz ') + st.bestQuiz + '/' + c.quiz.length + '</span>' : 'quiz');
+      meta.push(st.read ? '<span class="done">notes ✓</span>' : 'notes');
+      meta.push(st.mastered.length >= c.terms.length ? '<span class="done">cards ✓</span>' : st.mastered.length + '/' + c.terms.length + ' cards');
+      meta.push(st.bestQuiz !== null ? (st.bestQuiz >= Math.ceil(c.quiz.length * 0.7) ? '<span class="done">quiz ' : '<span>quiz ') + st.bestQuiz + '/' + c.quiz.length + '</span>' : 'quiz');
+      if (c.bank && c.bank.length) {
+        meta.push(st.bestBank !== null ? (st.bestBank >= Math.ceil(c.bank.length * 0.7) ? '<span class="done">practice ' : '<span>practice ') + st.bestBank + '/' + c.bank.length + '</span>' : 'practice');
+      }
       return '<li><a href="#/chapter/' + c.id + '">' +
         '<span class="ch-num">Ch ' + c.num + '</span>' +
         '<span class="ch-info"><span class="ch-title">' + esc(c.title) + '</span>' +
@@ -70,29 +78,41 @@
         '<span style="font-size:.78rem;color:var(--muted);font-weight:700">' + pct + '%</span>' +
         '</a></li>';
     }).join('');
-    return '<section class="subject-card ' + s.cls + '">' +
-      '<h2><span class="badge">' + (key === 'econ' ? 'ECON' : 'ACCT') + '</span>' + s.name + '</h2>' +
-      '<p class="sub">' + esc(s.sub) + '</p>' +
+    var examBest = loadStore()['exam-' + key];
+    return '<section class="subject-card ' + s.cls + '" id="subject-' + key + '">' +
+      '<h2><span class="badge">' + s.tag + '</span>' + s.name + '</h2>' +
+      '<p class="sub">' + esc(s.sub) + ' · <em>' + esc(s.note) + '</em></p>' +
       '<div class="pbar ' + (key === 'acct' ? 'acct-bar' : '') + '"><div style="width:' + avg + '%"></div></div>' +
       '<p class="pbar-label">' + avg + '% complete</p>' +
-      '<ul class="chapter-list">' + items + '</ul></section>';
+      '<ul class="chapter-list">' + items + '</ul>' +
+      (s.hasExam ?
+        '<a class="exam-cta" href="#/exam/' + key + '">Practice Exam — ' + EXAM_SIZE + ' random questions from all chapters' +
+        (examBest && examBest.best != null ? ' <span class="exam-best">best ' + examBest.best + '/' + examBest.of + '</span>' : '') +
+        '</a>' : '') +
+      '</section>';
   }
 
   function renderHome(only) {
-    var keys = only ? [only] : ['econ', 'acct'];
+    var keys = only ? [only] : SUBJECT_ORDER;
+    if (only) {
+      var s = SUBJECTS[only];
+      app.innerHTML =
+        '<p class="crumbs"><a href="#/">Home</a> › ' + s.name + '</p>' +
+        '<div class="subject-grid one-col">' + subjectCard(only) + '</div>';
+      return;
+    }
     var total = Math.round(CHAPTERS.reduce(function (a, c) { return a + chPct(c); }, 0) / CHAPTERS.length);
     app.innerHTML =
       '<div class="hero"><h1>MBA Course 1 Study Guide</h1>' +
-      '<p>Study notes, flashcards, and practice quizzes for your Economics and Accounting chapters. Your progress saves automatically in this browser.</p>' +
+      '<p>Notes, flashcards, quizzes, and a practice exam. Accounting is up first — that’s what the current test covers. Progress saves automatically in this browser.</p>' +
       '<div class="overall-bar"><div class="pbar"><div style="width:' + total + '%"></div></div>' +
       '<p class="pbar-label">Overall progress: ' + total + '%</p></div></div>' +
-      '<div class="subject-grid">' + keys.map(subjectCard).join('') + '</div>';
+      '<div class="subject-stack">' + keys.map(subjectCard).join('') + '</div>';
   }
 
   /* ---------- chapter ---------- */
   function renderChapter(ch, tab) {
     var s = SUBJECTS[ch.subject];
-    var st = chState(ch.id);
     var chs = subjectChapters(ch.subject);
     var idx = chs.indexOf(ch);
     var prev = chs[idx - 1], next = chs[idx + 1];
@@ -102,6 +122,9 @@
       { key: 'cards', label: 'Flashcards', count: ch.terms.length },
       { key: 'quiz', label: 'Quiz', count: ch.quiz.length }
     ];
+    if (ch.bank && ch.bank.length) tabs.push({ key: 'bank', label: 'Extra Practice', count: ch.bank.length });
+    if (!tabs.some(function (t) { return t.key === tab; })) tab = 'notes';
+
     app.innerHTML =
       '<div class="' + (ch.subject === 'acct' ? 'acct-page' : 'econ-page') + '">' +
       '<p class="crumbs"><a href="#/">Home</a> › <a href="#/subject/' + ch.subject + '">' + s.name + '</a> › Chapter ' + ch.num + '</p>' +
@@ -127,8 +150,17 @@
 
     var body = document.getElementById('tab-body');
     if (tab === 'cards') renderCards(ch, body);
-    else if (tab === 'quiz') renderQuiz(ch, body);
-    else renderNotes(ch, body);
+    else if (tab === 'quiz') {
+      runQuiz(body, ch.quiz.map(function (q) { return q; }), {
+        getBest: function () { return chState(ch.id).bestQuiz; },
+        setBest: function (v) { var s2 = chState(ch.id); s2.bestQuiz = v; setChState(ch.id, s2); }
+      });
+    } else if (tab === 'bank') {
+      runQuiz(body, ch.bank.map(function (q) { return q; }), {
+        getBest: function () { return chState(ch.id).bestBank; },
+        setBest: function (v) { var s2 = chState(ch.id); s2.bestBank = v; setChState(ch.id, s2); }
+      });
+    } else renderNotes(ch, body);
   }
 
   /* ---------- notes ---------- */
@@ -155,7 +187,6 @@
   }
 
   function renderCards(ch, body) {
-    var st = chState(ch.id);
     var deck = shuffle(ch.terms.map(function (t, i) { return { i: i, term: t.term, def: t.def }; }));
     var pos = 0, knownThisRun = 0;
 
@@ -194,7 +225,7 @@
         '<div class="fc-controls">' +
         '<button class="fc-btn again" id="fcAgain">Still learning</button>' +
         '<button class="fc-btn" id="fcSkip">Skip</button>' +
-        '<button class="fc-btn know" id="fcKnow">✓ I know this</button>' +
+        '<button class="fc-btn know" id="fcKnow">I know this</button>' +
         '</div></div>';
 
       var card = document.getElementById('fcCard');
@@ -220,15 +251,17 @@
     draw();
   }
 
-  /* ---------- quiz ---------- */
-  function renderQuiz(ch, body) {
-    var qs = shuffle(ch.quiz);
+  /* ---------- quiz engine (chapter quiz, extra practice, practice exam) ---------- */
+  function runQuiz(body, questions, opts) {
+    var qs = shuffle(questions);
+    if (opts.limit && qs.length > opts.limit) qs = qs.slice(0, opts.limit);
     var pos = 0, score = 0;
 
     function drawQ() {
       if (pos >= qs.length) {
-        var st = chState(ch.id);
-        if (st.bestQuiz === null || score > st.bestQuiz) { st.bestQuiz = score; setChState(ch.id, st); }
+        var prevBest = opts.getBest();
+        if (prevBest === null || prevBest === undefined || score > prevBest) opts.setBest(score);
+        var best = opts.getBest();
         var pct = Math.round(score / qs.length * 100);
         var msg = pct >= 90 ? 'Outstanding — exam ready.' :
                   pct >= 70 ? 'Solid work — review the ones you missed.' :
@@ -236,33 +269,35 @@
         body.innerHTML = '<div class="quiz-wrap"><div class="q-card q-result">' +
           '<div class="q-score">' + score + '/' + qs.length + '</div>' +
           '<p class="q-msg">' + msg + '</p>' +
-          '<p class="best">Best score: ' + chState(ch.id).bestQuiz + '/' + qs.length + '</p>' +
-          '<div class="chip-row"><button class="q-next" id="qRetry">Try again</button></div>' +
+          '<p class="best">Best score: ' + best + '/' + qs.length + '</p>' +
+          '<div class="chip-row"><button class="q-next" id="qRetry">' + (opts.retryLabel || 'Try again') + '</button></div>' +
           '</div></div>';
-        document.getElementById('qRetry').addEventListener('click', function () { renderQuiz(ch, body); });
+        document.getElementById('qRetry').addEventListener('click', function () { runQuiz(body, questions, opts); });
         return;
       }
       var q = qs[pos];
       var order = shuffle(q.options.map(function (o, i) { return { text: o, correct: i === q.answer }; }));
       body.innerHTML = '<div class="quiz-wrap">' +
         '<div class="q-progress"><span>Question ' + (pos + 1) + ' of ' + qs.length + '</span><span>Score: ' + score + '</span></div>' +
-        '<div class="q-card"><p class="q-text">' + esc(q.q) + '</p>' +
+        '<div class="q-card">' +
+        (q.tag ? '<span class="q-tag">' + esc(q.tag) + '</span>' : '') +
+        '<p class="q-text">' + esc(q.q) + '</p>' +
         '<div class="q-opts">' + order.map(function (o, i) {
           return '<button class="q-opt" data-i="' + i + '">' + esc(o.text) + '</button>';
         }).join('') + '</div><div id="qFeedback"></div></div></div>';
 
-      var opts = body.querySelectorAll('.q-opt');
-      opts.forEach(function (btn) {
+      var opts2 = body.querySelectorAll('.q-opt');
+      opts2.forEach(function (btn) {
         btn.addEventListener('click', function () {
           var pick = order[+btn.dataset.i];
-          opts.forEach(function (b, j) {
+          opts2.forEach(function (b, j) {
             b.disabled = true;
             if (order[j].correct) b.classList.add('correct');
           });
           if (pick.correct) { score++; }
           else btn.classList.add('wrong');
           document.getElementById('qFeedback').innerHTML =
-            '<div class="q-explain"><strong>' + (pick.correct ? 'Correct! ' : 'Not quite. ') + '</strong>' + esc(q.explain) + '</div>' +
+            '<div class="q-explain"><strong>' + (pick.correct ? 'Correct. ' : 'Not quite. ') + '</strong>' + esc(q.explain) + '</div>' +
             '<button class="q-next" id="qNext">' + (pos + 1 < qs.length ? 'Next question →' : 'See results') + '</button>';
           document.getElementById('qNext').addEventListener('click', function () { pos++; drawQ(); });
           document.querySelector('.q-progress span:last-child').textContent = 'Score: ' + score;
@@ -272,9 +307,35 @@
     drawQ();
   }
 
+  /* ---------- practice exam (subject-level, mixed chapters) ---------- */
+  function renderExam(subjectKey) {
+    var s = SUBJECTS[subjectKey];
+    var pool = [];
+    subjectChapters(subjectKey).forEach(function (ch) {
+      var tag = 'Ch ' + ch.num + ' · ' + ch.title;
+      ch.quiz.forEach(function (q) { pool.push(Object.assign({}, q, { tag: tag })); });
+      (ch.bank || []).forEach(function (q) { pool.push(Object.assign({}, q, { tag: tag })); });
+    });
+    var storeKey = 'exam-' + subjectKey;
+    app.innerHTML =
+      '<div class="' + s.cls + '-page">' +
+      '<p class="crumbs"><a href="#/">Home</a> › <a href="#/subject/' + subjectKey + '">' + s.name + '</a> › Practice Exam</p>' +
+      '<header class="ch-header">' +
+      '<span class="kicker ' + s.cls + '-k">' + s.name + ' · Practice Exam</span>' +
+      '<h1>Practice Exam</h1>' +
+      '<p class="overview">' + EXAM_SIZE + ' questions drawn at random from all ' + s.name.toLowerCase() + ' chapters (' + pool.length + ' questions in the pool). Every attempt is a different mix — each question is labeled with its chapter so you know what to review.</p>' +
+      '</header><div id="tab-body"></div></div>';
+    runQuiz(document.getElementById('tab-body'), pool, {
+      limit: EXAM_SIZE,
+      retryLabel: 'New exam (new random mix)',
+      getBest: function () { var e = loadStore()[storeKey]; return e ? e.best : null; },
+      setBest: function (v) { var st = loadStore(); st[storeKey] = { best: v, of: EXAM_SIZE }; saveStore(st); }
+    });
+  }
+
   /* ---------- reset ---------- */
   document.getElementById('resetProgress').addEventListener('click', function () {
-    if (confirm('Clear all saved progress (notes read, mastered cards, quiz scores)?')) {
+    if (confirm('Clear all saved progress (notes read, mastered cards, quiz and exam scores)?')) {
       localStorage.removeItem(KEY); route();
     }
   });

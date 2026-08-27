@@ -259,3 +259,21 @@ main{max-width:1080px;margin:0 auto;padding:40px 24px 88px}
   .brand span{display:none}
   .fc-card{height:340px}
 }
+
+/* subject stack + exam CTA + question tags */
+.subject-stack{display:flex;flex-direction:column;gap:24px}
+.subject-grid.one-col{grid-template-columns:1fr}
+.exam-cta{
+  display:block;margin-top:14px;text-decoration:none;text-align:center;
+  font-weight:700;font-size:.88rem;padding:13px 18px;border-radius:9px;
+  color:#0b0e14;background:linear-gradient(90deg,var(--acct),#83a9f5);
+}
+.exam-cta:hover{filter:brightness(1.08)}
+.exam-best{
+  font-weight:600;font-size:.75rem;opacity:.75;margin-left:8px;
+}
+.q-tag{
+  display:inline-block;font-size:.64rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);border:1px solid var(--line-2);
+  border-radius:5px;padding:3px 8px;margin-bottom:12px;
+}
