@@ -51,6 +51,10 @@
       renderHome(parts[1]);
     } else if (parts[0] === 'exam' && SUBJECTS[parts[1]] && SUBJECTS[parts[1]].hasExam) {
       renderExam(parts[1]);
+    } else if (parts[0] === 'practice' && SUBJECTS[parts[1]]) {
+      renderPracticeRun(parts[1]);
+    } else if (parts[0] === 'practice') {
+      renderPracticeHome();
     } else {
       renderHome(null);
     }
@@ -330,6 +334,56 @@
       retryLabel: 'New exam (new random mix)',
       getBest: function () { var e = loadStore()[storeKey]; return e ? e.best : null; },
       setBest: function (v) { var st = loadStore(); st[storeKey] = { best: v, of: EXAM_SIZE }; saveStore(st); }
+    });
+  }
+
+  /* ---------- practice questions (100-question bank per topic) ---------- */
+  function bankPool(subjectKey) {
+    var pool = [];
+    subjectChapters(subjectKey).forEach(function (ch) {
+      (ch.bank || []).forEach(function (q) {
+        pool.push(Object.assign({}, q, { tag: 'Ch ' + ch.num + ' · ' + ch.title }));
+      });
+    });
+    return pool;
+  }
+
+  function renderPracticeHome() {
+    var cards = SUBJECT_ORDER.map(function (key) {
+      var s = SUBJECTS[key];
+      var n = bankPool(key).length;
+      var best = loadStore()['practice-' + key];
+      return '<section class="subject-card ' + s.cls + '">' +
+        '<h2><span class="badge">' + s.tag + '</span>' + s.name + '</h2>' +
+        '<p class="sub">' + n + ' practice questions covering ' + esc(s.sub) + ' · <em>' + esc(s.note) + '</em></p>' +
+        '<p style="color:var(--muted);font-size:.88rem;margin:0 0 16px">Work through the full bank in one sitting or in chunks — questions are shuffled each run and labeled by chapter, with an explanation after every answer. Your best score is saved.</p>' +
+        '<a class="exam-cta" href="#/practice/' + key + '">Start ' + s.name + ' practice — ' + n + ' questions' +
+        (best && best.best != null ? ' <span class="exam-best">best ' + best.best + '/' + best.of + '</span>' : '') +
+        '</a></section>';
+    }).join('');
+    app.innerHTML =
+      '<p class="crumbs"><a href="#/">Home</a> › Practice Questions</p>' +
+      '<header class="ch-header"><h1>Practice Questions</h1>' +
+      '<p class="overview">Two question banks of 100 questions each — one per topic. These are separate from the chapter quizzes: longer, exam-style runs across every chapter of the topic.</p></header>' +
+      '<div class="subject-stack">' + cards + '</div>';
+  }
+
+  function renderPracticeRun(subjectKey) {
+    var s = SUBJECTS[subjectKey];
+    var pool = bankPool(subjectKey);
+    var storeKey = 'practice-' + subjectKey;
+    app.innerHTML =
+      '<div class="' + s.cls + '-page">' +
+      '<p class="crumbs"><a href="#/">Home</a> › <a href="#/practice">Practice Questions</a> › ' + s.name + '</p>' +
+      '<header class="ch-header">' +
+      '<span class="kicker ' + s.cls + '-k">' + s.name + ' · Practice Questions</span>' +
+      '<h1>' + s.name + ' Practice Bank</h1>' +
+      '<p class="overview">All ' + pool.length + ' ' + s.name.toLowerCase() + ' practice questions, shuffled and labeled by chapter. Answer at your own pace — your best score is saved when you finish.</p>' +
+      '</header><div id="tab-body"></div></div>';
+    runQuiz(document.getElementById('tab-body'), pool, {
+      retryLabel: 'Run the bank again (reshuffled)',
+      getBest: function () { var e = loadStore()[storeKey]; return e ? e.best : null; },
+      setBest: function (v) { var st = loadStore(); st[storeKey] = { best: v, of: pool.length }; saveStore(st); }
     });
   }
 
