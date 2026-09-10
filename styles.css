@@ -277,3 +277,40 @@ main{max-width:1080px;margin:0 auto;padding:40px 24px 88px}
   text-transform:uppercase;color:var(--muted);border:1px solid var(--line-2);
   border-radius:5px;padding:3px 8px;margin-bottom:12px;
 }
+
+/* formula sheet */
+.sheet-actions{display:flex;gap:10px;margin:0 0 20px;flex-wrap:wrap}
+.print-btn{
+  font:inherit;font-weight:700;font-size:.85rem;border:none;border-radius:8px;
+  padding:11px 22px;cursor:pointer;color:#0b0e14;background:var(--econ);
+}
+.print-btn:hover{filter:brightness(1.1)}
+.sheet-link{
+  font-weight:600;font-size:.85rem;text-decoration:none;border:1px solid var(--line-2);
+  border-radius:8px;padding:11px 22px;color:var(--ink);
+}
+.sheet-link:hover{border-color:var(--muted)}
+
+/* print: light, compact, no chrome */
+@media print{
+  :root{
+    --bg:#fff;--bg-2:#fff;--card:#fff;--card-2:#fff;--ink:#111;--muted:#555;
+    --line:#bbb;--line-2:#999;--econ:#111;--acct:#111;--econ-dim:#f2f2f2;--acct-dim:#f2f2f2;
+    --shadow:none;
+  }
+  body{background:#fff;color:#111;font-size:11px}
+  .topbar,.footer,.sheet-actions,.tabs,.ch-nav,.crumbs,.mark-read{display:none!important}
+  main{max-width:none;padding:0}
+  .note-section{border:none;box-shadow:none;padding:8px 0;margin:0 0 8px;page-break-inside:avoid}
+  .note-section h3{font-size:13px;border-bottom:1px solid #999;padding-bottom:3px}
+  .note-section table{font-size:10px}
+  .note-section th,.note-section td{padding:4px 6px;border-color:#bbb}
+  .note-section .formula{color:#111;background:#f4f4f4;border-color:#bbb;padding:4px 6px;font-size:10px;margin:4px 0}
+  .term{color:#111}
+  .tip{background:#f2f2f2;border-color:#999;color:#111}
+  .kicker{border:1px solid #999!important;color:#111!important;background:#fff!important}
+  .ch-header h1{font-size:18px}
+  .ch-header .overview{font-size:11px;color:#444}
+  a{text-decoration:none;color:#111}
+}
+.exam-cta.econ-cta{background:linear-gradient(90deg,var(--econ),#4ce0bb)}

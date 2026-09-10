@@ -55,6 +55,8 @@
       renderPracticeRun(parts[1]);
     } else if (parts[0] === 'practice') {
       renderPracticeHome();
+    } else if (parts[0] === 'formulas') {
+      renderFormulas();
     } else {
       renderHome(null);
     }
@@ -93,6 +95,8 @@
         '<a class="exam-cta" href="#/exam/' + key + '">Practice Exam — ' + EXAM_SIZE + ' random questions from all chapters' +
         (examBest && examBest.best != null ? ' <span class="exam-best">best ' + examBest.best + '/' + examBest.of + '</span>' : '') +
         '</a>' : '') +
+      (key === 'econ' && window.ECON_FORMULAS ?
+        '<a class="exam-cta econ-cta" href="#/formulas">Formula Sheet — every equation, open-note test reference</a>' : '') +
       '</section>';
   }
 
@@ -385,6 +389,28 @@
       getBest: function () { var e = loadStore()[storeKey]; return e ? e.best : null; },
       setBest: function (v) { var st = loadStore(); st[storeKey] = { best: v, of: pool.length }; saveStore(st); }
     });
+  }
+
+  /* ---------- econ formula sheet ---------- */
+  function renderFormulas() {
+    var F = window.ECON_FORMULAS;
+    if (!F) { renderHome(null); return; }
+    app.innerHTML =
+      '<div class="econ-page">' +
+      '<p class="crumbs"><a href="#/">Home</a> › <a href="#/subject/econ">Economics</a> › Formula Sheet</p>' +
+      '<header class="ch-header">' +
+      '<span class="kicker econ-k">Economics · Open-Note Reference</span>' +
+      '<h1>' + esc(F.title) + '</h1>' +
+      '<p class="overview">' + esc(F.intro) + '</p></header>' +
+      '<div class="sheet-actions">' +
+      '<button class="print-btn" id="printSheet">Print this sheet</button>' +
+      '<a class="sheet-link" href="econ-formula-sheet.html" target="_blank">Open printable version</a>' +
+      '</div>' +
+      F.sections.map(function (sec) {
+        return '<section class="note-section"><h3>' + esc(sec.title) + '</h3>' + sec.html + '</section>';
+      }).join('') +
+      '</div>';
+    document.getElementById('printSheet').addEventListener('click', function () { window.print(); });
   }
 
   /* ---------- reset ---------- */
