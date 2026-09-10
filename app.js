@@ -405,6 +405,7 @@
       '<div class="sheet-actions">' +
       '<button class="print-btn" id="printSheet">Print this sheet</button>' +
       '<a class="sheet-link" href="econ-formula-sheet.html" target="_blank">Open printable version</a>' +
+      '<a class="sheet-link" href="econ-formula-sheet.pdf" download>Download PDF</a>' +
       '</div>' +
       F.sections.map(function (sec) {
         return '<section class="note-section"><h3>' + esc(sec.title) + '</h3>' + sec.html + '</section>';
