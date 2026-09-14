@@ -11,6 +11,8 @@
   --econ-dim:rgba(45,212,167,.12);
   --acct:#5b8def;
   --acct-dim:rgba(91,141,239,.12);
+  --fin:#f0b34a;
+  --fin-dim:rgba(240,179,74,.12);
   --accent:#2dd4a7;
   --good:#2dd4a7;
   --bad:#f0625d;
@@ -314,3 +316,15 @@ main{max-width:1080px;margin:0 auto;padding:40px 24px 88px}
   a{text-decoration:none;color:#111}
 }
 .exam-cta.econ-cta{background:linear-gradient(90deg,var(--econ),#4ce0bb)}
+
+/* finance subject */
+.fin .badge{background:var(--fin)}
+.fin .ch-num{color:var(--fin);border-color:rgba(240,179,74,.35);background:var(--fin-dim)}
+.pbar.fin-bar>div{background:linear-gradient(90deg,var(--fin),#f7cd7e)}
+.kicker.fin-k{background:var(--fin-dim);color:var(--fin);border:1px solid rgba(240,179,74,.25)}
+.fin-page .note-section .formula{color:var(--fin)}
+.fin-page .tip{background:var(--fin-dim);border-color:rgba(240,179,74,.25)}
+.exam-cta.fin-cta{background:linear-gradient(90deg,var(--fin),#f7cd7e)}
+.fin-page .tab-btn.active{border-bottom-color:var(--fin)}
+.acct-page .tab-btn.active{border-bottom-color:var(--acct)}
+.fin-page .print-btn{background:var(--fin)}

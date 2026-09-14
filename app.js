@@ -5,9 +5,12 @@
   var CHAPTERS = window.COURSE_DATA || [];
   var SUBJECTS = {
     acct: { name: 'Accounting', sub: 'Accounting (Warren, 29e) — Chapters 1–4', tag: 'ACCT', cls: 'acct', note: 'On your current test', hasExam: true },
-    econ: { name: 'Economics', sub: 'Principles of Economics (Mankiw, 10e)', tag: 'ECON', cls: 'econ', note: 'Not on the current test', hasExam: false }
+    econ: { name: 'Economics', sub: 'Principles of Economics (Mankiw, 10e)', tag: 'ECON', cls: 'econ', note: 'Not on the current test', hasExam: false,
+            formulas: function () { return window.ECON_FORMULAS; }, sheetFile: 'econ-formula-sheet' },
+    fin:  { name: 'Finance', sub: 'Corporate Finance (Ehrhardt & Brigham, 8e) — Chapters 2–4', tag: 'FIN', cls: 'fin', note: 'Financial statements, ratios, time value of money', hasExam: false,
+            formulas: function () { return window.FIN_FORMULAS; }, sheetFile: 'fin-formula-sheet' }
   };
-  var SUBJECT_ORDER = ['acct', 'econ'];
+  var SUBJECT_ORDER = ['acct', 'econ', 'fin'];
   var EXAM_SIZE = 25;
   var app = document.getElementById('app');
 
@@ -55,8 +58,10 @@
       renderPracticeRun(parts[1]);
     } else if (parts[0] === 'practice') {
       renderPracticeHome();
+    } else if (parts[0] === 'formulas' && SUBJECTS[parts[1]] && SUBJECTS[parts[1]].formulas) {
+      renderFormulas(parts[1]);
     } else if (parts[0] === 'formulas') {
-      renderFormulas();
+      renderFormulasHome();
     } else {
       renderHome(null);
     }
@@ -88,15 +93,15 @@
     return '<section class="subject-card ' + s.cls + '" id="subject-' + key + '">' +
       '<h2><span class="badge">' + s.tag + '</span>' + s.name + '</h2>' +
       '<p class="sub">' + esc(s.sub) + ' · <em>' + esc(s.note) + '</em></p>' +
-      '<div class="pbar ' + (key === 'acct' ? 'acct-bar' : '') + '"><div style="width:' + avg + '%"></div></div>' +
+      '<div class="pbar ' + s.cls + '-bar"><div style="width:' + avg + '%"></div></div>' +
       '<p class="pbar-label">' + avg + '% complete</p>' +
       '<ul class="chapter-list">' + items + '</ul>' +
       (s.hasExam ?
         '<a class="exam-cta" href="#/exam/' + key + '">Practice Exam — ' + EXAM_SIZE + ' random questions from all chapters' +
         (examBest && examBest.best != null ? ' <span class="exam-best">best ' + examBest.best + '/' + examBest.of + '</span>' : '') +
         '</a>' : '') +
-      (key === 'econ' && window.ECON_FORMULAS ?
-        '<a class="exam-cta econ-cta" href="#/formulas">Formula Sheet — every equation, open-note test reference</a>' : '') +
+      (s.formulas && s.formulas() ?
+        '<a class="exam-cta ' + s.cls + '-cta" href="#/formulas/' + key + '">Formula Sheet — every equation, open-note test reference</a>' : '') +
       '</section>';
   }
 
@@ -112,7 +117,7 @@
     var total = Math.round(CHAPTERS.reduce(function (a, c) { return a + chPct(c); }, 0) / CHAPTERS.length);
     app.innerHTML =
       '<div class="hero"><h1>MBA Course 1 Study Guide</h1>' +
-      '<p>Notes, flashcards, quizzes, and a practice exam. Accounting is up first — that’s what the current test covers. Progress saves automatically in this browser.</p>' +
+      '<p>Notes, flashcards, quizzes, practice banks, and formula sheets for Accounting, Economics, and Finance. Progress saves automatically in this browser.</p>' +
       '<div class="overall-bar"><div class="pbar"><div style="width:' + total + '%"></div></div>' +
       '<p class="pbar-label">Overall progress: ' + total + '%</p></div></div>' +
       '<div class="subject-stack">' + keys.map(subjectCard).join('') + '</div>';
@@ -134,7 +139,7 @@
     if (!tabs.some(function (t) { return t.key === tab; })) tab = 'notes';
 
     app.innerHTML =
-      '<div class="' + (ch.subject === 'acct' ? 'acct-page' : 'econ-page') + '">' +
+      '<div class="' + s.cls + '-page">' +
       '<p class="crumbs"><a href="#/">Home</a> › <a href="#/subject/' + ch.subject + '">' + s.name + '</a> › Chapter ' + ch.num + '</p>' +
       '<header class="ch-header">' +
       '<span class="kicker ' + s.cls + '-k">' + s.name + ' · Chapter ' + ch.num + '</span>' +
@@ -368,7 +373,7 @@
     app.innerHTML =
       '<p class="crumbs"><a href="#/">Home</a> › Practice Questions</p>' +
       '<header class="ch-header"><h1>Practice Questions</h1>' +
-      '<p class="overview">Two question banks of 100 questions each — one per topic. These are separate from the chapter quizzes: longer, exam-style runs across every chapter of the topic.</p></header>' +
+      '<p class="overview">One question bank per topic — separate from the chapter quizzes: longer, exam-style runs across every chapter of the topic.</p></header>' +
       '<div class="subject-stack">' + cards + '</div>';
   }
 
@@ -391,21 +396,39 @@
     });
   }
 
-  /* ---------- econ formula sheet ---------- */
-  function renderFormulas() {
-    var F = window.ECON_FORMULAS;
-    if (!F) { renderHome(null); return; }
+  /* ---------- formula sheets (per subject) ---------- */
+  function renderFormulasHome() {
+    var cards = SUBJECT_ORDER.filter(function (k) { return SUBJECTS[k].formulas && SUBJECTS[k].formulas(); })
+      .map(function (key) {
+        var s = SUBJECTS[key], F = s.formulas();
+        return '<section class="subject-card ' + s.cls + '">' +
+          '<h2><span class="badge">' + s.tag + '</span>' + esc(F.title) + '</h2>' +
+          '<p class="sub">' + esc(F.intro) + '</p>' +
+          '<a class="exam-cta ' + s.cls + '-cta" href="#/formulas/' + key + '">Open the ' + s.name + ' formula sheet</a>' +
+          '</section>';
+      }).join('');
     app.innerHTML =
-      '<div class="econ-page">' +
-      '<p class="crumbs"><a href="#/">Home</a> › <a href="#/subject/econ">Economics</a> › Formula Sheet</p>' +
+      '<p class="crumbs"><a href="#/">Home</a> › Formula Sheets</p>' +
+      '<header class="ch-header"><h1>Formula Sheets</h1>' +
+      '<p class="overview">Every equation from the course decks with what it is used for and how to apply it. Each sheet can be printed or downloaded as a PDF for an open-note test.</p></header>' +
+      '<div class="subject-stack">' + cards + '</div>';
+  }
+
+  function renderFormulas(subjectKey) {
+    var s = SUBJECTS[subjectKey];
+    var F = s.formulas();
+    if (!F) { renderFormulasHome(); return; }
+    app.innerHTML =
+      '<div class="' + s.cls + '-page">' +
+      '<p class="crumbs"><a href="#/">Home</a> › <a href="#/formulas">Formula Sheets</a> › ' + s.name + '</p>' +
       '<header class="ch-header">' +
-      '<span class="kicker econ-k">Economics · Open-Note Reference</span>' +
+      '<span class="kicker ' + s.cls + '-k">' + s.name + ' · Open-Note Reference</span>' +
       '<h1>' + esc(F.title) + '</h1>' +
       '<p class="overview">' + esc(F.intro) + '</p></header>' +
       '<div class="sheet-actions">' +
       '<button class="print-btn" id="printSheet">Print this sheet</button>' +
-      '<a class="sheet-link" href="econ-formula-sheet.html" target="_blank">Open printable version</a>' +
-      '<a class="sheet-link" href="econ-formula-sheet.pdf" download>Download PDF</a>' +
+      '<a class="sheet-link" href="' + s.sheetFile + '.html" target="_blank">Open printable version</a>' +
+      '<a class="sheet-link" href="' + s.sheetFile + '.pdf" download>Download PDF</a>' +
       '</div>' +
       F.sections.map(function (sec) {
         return '<section class="note-section"><h3>' + esc(sec.title) + '</h3>' + sec.html + '</section>';
