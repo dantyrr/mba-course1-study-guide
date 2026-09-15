@@ -8,9 +8,11 @@
     econ: { name: 'Economics', sub: 'Principles of Economics (Mankiw, 10e)', tag: 'ECON', cls: 'econ', note: 'Not on the current test', hasExam: false,
             formulas: function () { return window.ECON_FORMULAS; }, sheetFile: 'econ-formula-sheet' },
     fin:  { name: 'Finance', sub: 'Corporate Finance (Ehrhardt & Brigham, 8e) — Chapters 2–4', tag: 'FIN', cls: 'fin', note: 'Financial statements, ratios, time value of money', hasExam: false,
-            formulas: function () { return window.FIN_FORMULAS; }, sheetFile: 'fin-formula-sheet' }
+            formulas: function () { return window.FIN_FORMULAS; }, sheetFile: 'fin-formula-sheet' },
+    fbook: { name: 'Finance Book', sub: 'Corporate Finance textbook chapters (Ehrhardt & Brigham) — built from the book, not the slides', tag: 'BOOK', cls: 'fbook', note: 'Ch 2 now; Ch 3–4 when pasted', hasExam: false,
+            formulas: function () { return window.FBOOK_FORMULAS; }, sheetFile: 'fbook-formula-sheet' }
   };
-  var SUBJECT_ORDER = ['acct', 'econ', 'fin'];
+  var SUBJECT_ORDER = ['acct', 'econ', 'fin', 'fbook'];
   var EXAM_SIZE = 25;
   var app = document.getElementById('app');
 
@@ -117,7 +119,7 @@
     var total = Math.round(CHAPTERS.reduce(function (a, c) { return a + chPct(c); }, 0) / CHAPTERS.length);
     app.innerHTML =
       '<div class="hero"><h1>MBA Course 1 Study Guide</h1>' +
-      '<p>Notes, flashcards, quizzes, practice banks, and formula sheets for Accounting, Economics, and Finance. Progress saves automatically in this browser.</p>' +
+      '<p>Notes, flashcards, quizzes, practice banks, and formula sheets for Accounting, Economics, Finance (slides), and the Finance textbook. Progress saves automatically in this browser.</p>' +
       '<div class="overall-bar"><div class="pbar"><div style="width:' + total + '%"></div></div>' +
       '<p class="pbar-label">Overall progress: ' + total + '%</p></div></div>' +
       '<div class="subject-stack">' + keys.map(subjectCard).join('') + '</div>';

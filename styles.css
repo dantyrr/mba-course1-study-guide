@@ -13,6 +13,8 @@
   --acct-dim:rgba(91,141,239,.12);
   --fin:#f0b34a;
   --fin-dim:rgba(240,179,74,.12);
+  --fbook:#b48cf2;
+  --fbook-dim:rgba(180,140,242,.12);
   --accent:#2dd4a7;
   --good:#2dd4a7;
   --bad:#f0625d;
@@ -328,3 +330,14 @@ main{max-width:1080px;margin:0 auto;padding:40px 24px 88px}
 .fin-page .tab-btn.active{border-bottom-color:var(--fin)}
 .acct-page .tab-btn.active{border-bottom-color:var(--acct)}
 .fin-page .print-btn{background:var(--fin)}
+
+/* finance book subject */
+.fbook .badge{background:var(--fbook)}
+.fbook .ch-num{color:var(--fbook);border-color:rgba(180,140,242,.35);background:var(--fbook-dim)}
+.pbar.fbook-bar>div{background:linear-gradient(90deg,var(--fbook),#cfb3f7)}
+.kicker.fbook-k{background:var(--fbook-dim);color:var(--fbook);border:1px solid rgba(180,140,242,.25)}
+.fbook-page .note-section .formula{color:var(--fbook)}
+.fbook-page .tip{background:var(--fbook-dim);border-color:rgba(180,140,242,.25)}
+.exam-cta.fbook-cta{background:linear-gradient(90deg,var(--fbook),#cfb3f7)}
+.fbook-page .tab-btn.active{border-bottom-color:var(--fbook)}
+.fbook-page .print-btn{background:var(--fbook)}
