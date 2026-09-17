@@ -341,3 +341,8 @@ main{max-width:1080px;margin:0 auto;padding:40px 24px 88px}
 .exam-cta.fbook-cta{background:linear-gradient(90deg,var(--fbook),#cfb3f7)}
 .fbook-page .tab-btn.active{border-bottom-color:var(--fbook)}
 .fbook-page .print-btn{background:var(--fbook)}
+
+.ch-meta .alt-label{
+  font-weight:700;color:var(--fbook);border:1px solid rgba(180,140,242,.35);
+  border-radius:4px;padding:0 5px;font-size:.68rem;letter-spacing:.03em;
+}

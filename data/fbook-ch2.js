@@ -1,6 +1,6 @@
 window.COURSE_DATA = window.COURSE_DATA || [];
 window.COURSE_DATA.push({
-  id: 'fbook-ch2', subject: 'fbook', num: 2,
+  id: 'fbook-ch2', subject: 'fbook', num: 2, altLabel: 'Course Ch 13',
   title: 'Financial Statements, Cash Flow, and Taxes',
   overview: 'Built from the textbook chapter rather than the slides. The book’s thesis: a firm’s intrinsic value is the present value of its free cash flows discounted at the WACC, so the whole chapter is about getting from accounting statements to FCF — using MicroDrive, Inc. as the running example — and then evaluating performance (ROIC, MVA, EVA) and the tax rules that shape after-tax cash flows.',
   sections: [

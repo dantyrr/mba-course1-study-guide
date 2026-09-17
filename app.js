@@ -9,7 +9,7 @@
             formulas: function () { return window.ECON_FORMULAS; }, sheetFile: 'econ-formula-sheet' },
     fin:  { name: 'Finance', sub: 'Corporate Finance (Ehrhardt & Brigham, 8e) — Chapters 2–4', tag: 'FIN', cls: 'fin', note: 'Financial statements, ratios, time value of money', hasExam: false,
             formulas: function () { return window.FIN_FORMULAS; }, sheetFile: 'fin-formula-sheet' },
-    fbook: { name: 'Finance Book', sub: 'Corporate Finance textbook chapters (Ehrhardt & Brigham) — built from the book, not the slides', tag: 'BOOK', cls: 'fbook', note: 'Ch 2 now; Ch 3–4 when pasted', hasExam: false,
+    fbook: { name: 'Finance Book', sub: 'Corporate Finance textbook chapters (Ehrhardt & Brigham) — built from the book, not the slides', tag: 'BOOK', cls: 'fbook', note: 'Ch 2–3 (course Ch 13–14); Ch 4 when added', hasExam: false,
             formulas: function () { return window.FBOOK_FORMULAS; }, sheetFile: 'fbook-formula-sheet' }
   };
   var SUBJECT_ORDER = ['acct', 'econ', 'fin', 'fbook'];
@@ -84,6 +84,7 @@
       if (c.bank && c.bank.length) {
         meta.push(st.bestBank !== null ? (st.bestBank >= Math.ceil(c.bank.length * 0.7) ? '<span class="done">practice ' : '<span>practice ') + st.bestBank + '/' + c.bank.length + '</span>' : 'practice');
       }
+      if (c.altLabel) meta.unshift('<span class="alt-label">' + esc(c.altLabel) + '</span>');
       return '<li><a href="#/chapter/' + c.id + '">' +
         '<span class="ch-num">Ch ' + c.num + '</span>' +
         '<span class="ch-info"><span class="ch-title">' + esc(c.title) + '</span>' +
@@ -144,7 +145,8 @@
       '<div class="' + s.cls + '-page">' +
       '<p class="crumbs"><a href="#/">Home</a> › <a href="#/subject/' + ch.subject + '">' + s.name + '</a> › Chapter ' + ch.num + '</p>' +
       '<header class="ch-header">' +
-      '<span class="kicker ' + s.cls + '-k">' + s.name + ' · Chapter ' + ch.num + '</span>' +
+      '<span class="kicker ' + s.cls + '-k">' + s.name + ' · Chapter ' + ch.num +
+        (ch.altLabel ? ' · ' + esc(ch.altLabel) : '') + '</span>' +
       '<h1>' + esc(ch.title) + '</h1>' +
       '<p class="overview">' + ch.overview + '</p></header>' +
       '<nav class="tabs">' + tabs.map(function (t) {

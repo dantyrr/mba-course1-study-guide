@@ -1,7 +1,7 @@
 /* Finance textbook formula sheet — every numbered equation from Chapter 2 with MicroDrive worked values */
 window.FBOOK_FORMULAS = {
   title: 'Finance Book Formula Sheet',
-  intro: 'Every numbered equation from the textbook chapter (Financial Statements, Cash Flow, and Taxes) plus the tax formulas from Section 2-9, 2-10, and Web Extension 2A, with what each is used for and the MicroDrive worked values. Built for an open-note test.',
+  intro: 'Every equation from the textbook chapters — Ch 2 Financial Statements, Cash Flow and Taxes (course Ch 13) and Ch 3 Analysis of Financial Statements (course Ch 14) — with what each is used for and worked values from the book’s own MicroDrive and Morris Corporation examples. Built for an open-note test.',
   sections: [
     { title: 'Ch 2 — Income Statement and Cash Flow Equations (2-1 to 2-5)', html:
       '<div class="tablewrap"><table>' +
@@ -63,6 +63,55 @@ window.FBOOK_FORMULAS = {
       '<tr><td><div class="formula">NIIT = 3.8% × MIN(Net investment income, MAGI − threshold)&nbsp;&nbsp;(threshold $200,000 single / $250,000 joint)</div></td><td>Extra tax on high earners’ investment income.</td><td>MAGI $300,000, investment income $80,000 → $3,040; $150,000 → $3,800.</td></tr>' +
       '<tr><td><div class="formula">Pass-through effective rate = Personal rate × (1 − 0.20)<br>C-corp total rate = 21% + (Dividend rate × 79%)</div></td><td>Comparing business forms.</td><td>37% owner: 29.6% (keeps 70.4%) vs. C-corp 21% + 15.8% = 36.8% (keeps 63.2%) — 7.2-point advantage.</td></tr>' +
       '</table></div>' },
+
+{ title: 'Ch 3 (Course Ch 14) — Profitability Ratios', html:
+      '<div class="tablewrap"><table>' +
+      '<tr><th style="width:34%">Formula</th><th style="width:30%">What it is used for</th><th>Worked (Morris Corp · MicroDrive)</th></tr>' +
+      '<tr><td><div class="formula">Net profit margin = Net income ÷ Sales</div></td><td>Profit per dollar of sales after interest and taxes.</td><td>Morris: 150 ÷ 820 = 18.3% · MicroDrive: 248 ÷ 5,000 = 5.0%</td></tr>' +
+      '<tr><td><div class="formula">Operating profit margin = EBIT ÷ Sales</div></td><td>Operations before interest expense — separates operating from financing problems.</td><td>Morris: 220 ÷ 820 = 26.8% · MicroDrive: 400 ÷ 5,000 = 8.0%</td></tr>' +
+      '<tr><td><div class="formula">Gross profit margin = (Sales − COGS) ÷ Sales</div></td><td>Gross profit per sales dollar before any other expenses.</td><td>MicroDrive: (5,000 − 4,100) ÷ 5,000 = 18.0%</td></tr>' +
+      '<tr><td><div class="formula">Basic earning power (BEP) = EBIT ÷ Total assets</div></td><td>Raw asset earning power BEFORE taxes and leverage — compares firms with different tax and debt profiles.</td><td>Morris: 220 ÷ 670 = 32.8% · MicroDrive: 400 ÷ 3,610 = 11.1%</td></tr>' +
+      '<tr><td><div class="formula">Return on assets (ROA) = Net income ÷ Total assets</div></td><td>Return after interest and taxes. Debt lowers ROA.</td><td>Morris: 150 ÷ 670 = 22.4% · MicroDrive: 248 ÷ 3,610 = 6.9%</td></tr>' +
+      '<tr><td><div class="formula">Return on equity (ROE) = Net income ÷ Common equity</div></td><td>Shareholders’ accounting return. Debt can raise it — with more risk.</td><td>Morris: 150 ÷ 415 = 36.1% · MicroDrive: 248 ÷ 2,240 = 11.1%</td></tr>' +
+      '</table></div>' },
+
+    { title: 'Ch 3 — Asset Management (Efficiency) Ratios', html:
+      '<div class="tablewrap"><table>' +
+      '<tr><th style="width:34%">Formula</th><th style="width:30%">What it is used for</th><th>Worked (Morris · MicroDrive)</th></tr>' +
+      '<tr><td><div class="formula">Total assets turnover = Sales ÷ Total assets</div></td><td>Sales generated per dollar tied up in assets.</td><td>Morris: 820 ÷ 670 = 1.2× · MicroDrive: 5,000 ÷ 3,610 = 1.39×</td></tr>' +
+      '<tr><td><div class="formula">Fixed assets turnover = Sales ÷ Net fixed assets</div></td><td>How effectively plant and equipment are used.</td><td>Morris: 820 ÷ 500 = 1.6× · MicroDrive: 5,000 ÷ 2,000 = 2.5×<br><em>Caution: historical cost makes older firms look better.</em></td></tr>' +
+      '<tr><td><div class="formula">DSO = Receivables ÷ (Sales ÷ 365)</div></td><td>Average days from sale to cash (= average collection period).</td><td>Morris: 30 ÷ 2.25 = 13.4 days · MicroDrive: 500 ÷ 13.7 = 36.5 days</td></tr>' +
+      '<tr><td><div class="formula">Inventory turnover = COGS ÷ Inventories</div></td><td>Times inventory is sold and replaced. <strong>Uses COGS, not sales</strong> — sales include profit, inventory is at cost.</td><td>Morris: 500 ÷ 100 = 5.0× · MicroDrive: 4,100 ÷ 1,000 = 4.1×</td></tr>' +
+      '</table></div>' +
+      '<div class="tip">Use <strong>year-end</strong> balances so ratios match published industry averages, even though averages would be better for growing or seasonal firms.</div>' },
+
+    { title: 'Ch 3 — Liquidity and Debt Management Ratios', html:
+      '<div class="tablewrap"><table>' +
+      '<tr><th style="width:34%">Formula</th><th style="width:30%">What it is used for</th><th>Worked (Morris · MicroDrive)</th></tr>' +
+      '<tr><td><div class="formula">Current ratio = Current assets ÷ Current liabilities</div></td><td>Best single indicator of short-term creditor coverage.</td><td>Morris: 170 ÷ 55 = 3.1× · MicroDrive: 1,610 ÷ 750 = 2.15×</td></tr>' +
+      '<tr><td><div class="formula">Quick (acid test) ratio = (Current assets − Inventories) ÷ Current liabilities</div></td><td>Paying short-term debts without selling inventory (the least liquid current asset).</td><td>Morris: 70 ÷ 55 = 1.3× · MicroDrive: 610 ÷ 750 = 0.81×</td></tr>' +
+      '<tr><td><div class="formula">Debt-to-assets (debt) ratio = Total debt ÷ Total assets<br><em>Total debt = short-term debt + long-term debt ONLY</em></div></td><td>Percentage of the firm financed with debt.</td><td>Morris: 225 ÷ 670 = 33.6% · MicroDrive: 670 ÷ 3,610 = 18.6%</td></tr>' +
+      '<tr><td><div class="formula">Debt-to-equity = Total debt ÷ Common equity</div></td><td>Same leverage idea, different base.</td><td>Morris: 225 ÷ 415 = 54.2% · MicroDrive: 670 ÷ 2,240 = 29.9%</td></tr>' +
+      '<tr><td><div class="formula">Market debt ratio = Total debt ÷ (Total debt + Market value of equity)</div></td><td>Leverage measured against market, not book, equity.</td><td>Morris: 225 ÷ (225 + 100 × $15) = 13.0% — far below the 33.6% book figure, so less risky than book suggests.</td></tr>' +
+      '<tr><td><div class="formula">Liabilities-to-assets = Total liabilities ÷ Total assets</div></td><td>Assets supported by ALL liabilities, not just debt — always ≥ the debt ratio.</td><td>Morris: 255 ÷ 670 = 38.1% · MicroDrive: 1,270 ÷ 3,610 = 35.2%</td></tr>' +
+      '<tr><td><div class="formula">Equity multiplier = Total assets ÷ Common equity</div></td><td>The factor multiplying ROA to get ROE — the DuPont leverage term.</td><td>Morris: 670 ÷ 415 = 1.61× · MicroDrive: 3,610 ÷ 2,240 = 1.61×</td></tr>' +
+      '<tr><td><div class="formula">Times-interest-earned = EBIT ÷ Interest expense</div></td><td>Cushion before interest cannot be covered. <strong>Long-term bondholders watch this.</strong></td><td>Morris: 220 ÷ 20 = 11.0× · MicroDrive: 400 ÷ 60 = 6.7×</td></tr>' +
+      '<tr><td><div class="formula">EBITDA coverage = (EBITDA + Lease pmts) ÷ (Interest + Lease pmts + Principal pmts)</div></td><td>Broader coverage. <strong>Banks and short-term lenders watch this.</strong> Leases appear in BOTH halves.</td><td>Self-test: (600 + 40) ÷ (60 + 40 + 30) = 640 ÷ 130 = 4.9×</td></tr>' +
+      '</table></div>' },
+
+    { title: 'Ch 3 — Market Value Ratios and the DuPont Equation', html:
+      '<div class="tablewrap"><table>' +
+      '<tr><th style="width:34%">Formula</th><th style="width:30%">What it is used for</th><th>Worked (MicroDrive)</th></tr>' +
+      '<tr><td><div class="formula">P/E = Price per share ÷ EPS</div></td><td>What investors pay per dollar of profit. Higher with growth, lower with risk.</td><td>$31.00 ÷ $4.13 = 7.5×</td></tr>' +
+      '<tr><td><div class="formula">P/FCF = Price per share ÷ FCF per share</div></td><td>Price against the cash flow that actually drives value.</td><td>MicroDrive FCF was −$210M → <strong>not meaningful</strong> (negative denominator).</td></tr>' +
+      '<tr><td><div class="formula">Price/EBITDA = Price ÷ EBITDA</div></td><td>Better operating measure than P/E, which includes interest and taxes.</td><td>—</td></tr>' +
+      '<tr><td><div class="formula">Book value per share = Common equity ÷ Shares</div></td><td>Accounting value per share.</td><td>2,240 ÷ 60 = $37.33</td></tr>' +
+      '<tr><td><div class="formula">Market cap = Shares × Price</div></td><td>Total market value of equity.</td><td>60 × $31 = $1,860M</td></tr>' +
+      '<tr><td><div class="formula">M/B = Price ÷ BVPS = Market cap ÷ Common equity</div></td><td>How investors regard the firm; high-ROE firms sell at higher multiples of book.</td><td>31 ÷ 37.33 = 0.83× — market values it BELOW book equity.</td></tr>' +
+      '<tr><td><div class="formula">DuPont (simple): ROE = ROA × Equity multiplier<br>DuPont (extended):<br>ROE = Profit margin × Total assets turnover × Equity multiplier</div></td><td>Explains WHY ROE is what it is: expense control × asset utilization × debt utilization.</td><td>Morris: 18.3% × 1.224 × 1.614 = 36.1% ✓<br>MicroDrive: 4.96% × 1.385 × 1.612 = 11.1% ✓<br>Self-test: 6% × 2 × 1.5 = 18%<br>Jewelry store: 20% × 0.5 × 1.0 = 10%</td></tr>' +
+      '<tr><td><div class="formula">Common size: Income items ÷ Sales; Balance sheet items ÷ Total assets<br>Percentage change: (Value − Base year) ÷ Base year</div></td><td>Comparing across firms and years once size is removed.</td><td>—</td></tr>' +
+      '</table></div>' +
+      '<div class="tip"><strong>Morris Corporation reference data</strong> (used by four consecutive self-tests): Cash 40 · A/R 30 · Inventories 100 · Net fixed assets 500 → <strong>Total assets 670</strong>. A/P 20 · Accruals 10 · Short-term debt 25 · LT debt 200 · Equity 415. Sales 820 · COGS excl. depr. 450 · Depreciation 50 · Other opex 100 → <strong>EBIT 220</strong> · Interest 20 · Tax 25% → <strong>Net income 150</strong>. Current assets 170 · Current liabilities 55 · Total debt 225 · Total liabilities 255 · COGS incl. depr. 500. Stock: 100 shares at $15.</div>' },
 
     { title: 'Ch 2 — Self-Test Problem Template (Cole Furnaces)', html:
       '<div class="tablewrap"><table><tr><th>Given</th><th>Compute</th><th>Answer</th></tr>' +
