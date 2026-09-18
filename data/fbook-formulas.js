@@ -1,7 +1,7 @@
 /* Finance textbook formula sheet — every numbered equation from Chapter 2 with MicroDrive worked values */
 window.FBOOK_FORMULAS = {
   title: 'Finance Book Formula Sheet',
-  intro: 'Every equation from the textbook chapters — Ch 2 Financial Statements, Cash Flow and Taxes (course Ch 13) and Ch 3 Analysis of Financial Statements (course Ch 14) — with what each is used for and worked values from the book’s own MicroDrive and Morris Corporation examples. Built for an open-note test.',
+  intro: 'Every equation from the textbook chapters — Ch 2 Financial Statements, Cash Flow and Taxes (course Ch 13), Ch 3 Analysis of Financial Statements (course Ch 14), and Ch 4 Time Value of Money (course Ch 15) — with what each is used for and worked values from the book’s own MicroDrive, Morris Corporation, and TVM examples. Built for an open-note test.',
   sections: [
     { title: 'Ch 2 — Income Statement and Cash Flow Equations (2-1 to 2-5)', html:
       '<div class="tablewrap"><table>' +
@@ -112,6 +112,62 @@ window.FBOOK_FORMULAS = {
       '<tr><td><div class="formula">Common size: Income items ÷ Sales; Balance sheet items ÷ Total assets<br>Percentage change: (Value − Base year) ÷ Base year</div></td><td>Comparing across firms and years once size is removed.</td><td>—</td></tr>' +
       '</table></div>' +
       '<div class="tip"><strong>Morris Corporation reference data</strong> (used by four consecutive self-tests): Cash 40 · A/R 30 · Inventories 100 · Net fixed assets 500 → <strong>Total assets 670</strong>. A/P 20 · Accruals 10 · Short-term debt 25 · LT debt 200 · Equity 415. Sales 820 · COGS excl. depr. 450 · Depreciation 50 · Other opex 100 → <strong>EBIT 220</strong> · Interest 20 · Tax 25% → <strong>Net income 150</strong>. Current assets 170 · Current liabilities 55 · Total debt 225 · Total liabilities 255 · COGS incl. depr. 500. Stock: 100 shares at $15.</div>' },
+
+{ title: 'Ch 4 (Course Ch 15) — Lump Sums, Rates, and Periods', html:
+      '<div class="tablewrap"><table>' +
+      '<tr><th style="width:34%">Equation</th><th style="width:30%">What it is used for</th><th>Worked example</th></tr>' +
+      '<tr><td><div class="formula">(4-1) FV<sub>N</sub> = PV(1 + I)<sup>N</sup></div></td><td>Compounding a single amount forward.</td><td>$100 at 5%, 3 yrs = $115.76 · Excel <code>=FV(I,N,0,PV)</code></td></tr>' +
+      '<tr><td><div class="formula">(4-3) PV = FV<sub>N</sub> ÷ (1 + I)<sup>N</sup></div></td><td>Discounting back to today; the basis of all valuation.</td><td>$115.76 in 3 yrs at 5% = $100 · <code>=PV(I,N,0,FV)</code></td></tr>' +
+      '<tr><td><div class="formula">(4-4) I = (FV<sub>N</sub> ÷ PV)<sup>1/N</sup> − 1</div></td><td>Implied rate of return or growth rate.</td><td>$100 → $150 in 10 yrs = 4.14% · <code>=RATE(N,PMT,PV,FV)</code></td></tr>' +
+      '<tr><td><div class="formula">(4-5) N = ln(FV<sub>N</sub> ÷ PV) ÷ ln(1 + I)</div></td><td>Time needed to reach a goal.</td><td>$500,000 → $1M at 4.5% = 15.75 yrs · <code>=NPER(I,PMT,PV,FV)</code></td></tr>' +
+      '<tr><td><div class="formula">Simple interest: FV = PV + PV(I)(N)</div></td><td>Interest on principal only (some legal documents).</td><td>$100 at 5%, 3 yrs = $115.00 vs. $115.76 compounded.</td></tr>' +
+      '<tr><td><div class="formula">(4-2) Calculator master equation:<br>PV(1+I)<sup>N</sup> + PMT[((1+I)<sup>N</sup>−1) ÷ I] + FV = 0</div></td><td>What the five TVM keys actually solve. Know any four, get the fifth.</td><td>At least one cash flow must be negative or you get an error.</td></tr>' +
+      '</table></div>' },
+
+    { title: 'Ch 4 — Annuities and Perpetuities', html:
+      '<div class="tablewrap"><table>' +
+      '<tr><th style="width:34%">Equation</th><th style="width:30%">What it is used for</th><th>Worked ($100, 3 yrs, 5%)</th></tr>' +
+      '<tr><td><div class="formula">(4-6) PV of perpetuity = PMT ÷ I</div></td><td>Payments that never end (consols, preferred stock).</td><td>$25 at 2.5% = $1,000; at 3% = $833.33; at 2% = $1,250. PV moves INVERSELY with rates.</td></tr>' +
+      '<tr><td><div class="formula">(4-7) FVA<sub>N</sub> = PMT[((1 + I)<sup>N</sup> − 1) ÷ I]</div></td><td>Savings plans — value built up by equal deposits.</td><td>$315.25 · <code>=FV(0.05,3,-100,0)</code></td></tr>' +
+      '<tr><td><div class="formula">(4-9) PVA<sub>N</sub> = PMT[1/I − 1/(I(1 + I)<sup>N</sup>)]</div></td><td>Loan values, pensions, bond coupon streams.</td><td>$272.32 · <code>=PV(0.05,3,-100,0)</code></td></tr>' +
+      '<tr><td><div class="formula">(4-8) FVA<sub>due</sub> = FVA<sub>ord</sub>(1 + I)<br>(4-10) PVA<sub>due</sub> = PVA<sub>ord</sub>(1 + I)</div></td><td>Payments at the BEGINNING of each period (leases, insurance, lottery).</td><td>FV $331.01 · PV $285.94 · Begin Mode, or Excel Type = 1</td></tr>' +
+      '<tr><td><div class="formula">Required annuity-due PMT = ordinary PMT ÷ (1 + I)</div></td><td>Solving for the deposit needed, not the value.</td><td>$1,773.96 ÷ 1.06 = $1,673.55 (note: DIVIDE for payments, multiply for values).</td></tr>' +
+      '</table></div>' +
+      '<div class="tip">In an ordinary annuity the <strong>first</strong> payment earns interest for N−1 periods and the <strong>last earns none</strong>. Set PV = 0 when solving for an annuity’s FV, and FV = 0 when solving for its PV.</div>' },
+
+    { title: 'Ch 4 — Uneven Streams, NPV, and IRR', html:
+      '<div class="tablewrap"><table>' +
+      '<tr><th style="width:34%">Equation</th><th style="width:30%">What it is used for</th><th>Worked example</th></tr>' +
+      '<tr><td><div class="formula">(4-11) PV = Σ CF<sub>t</sub> ÷ (1 + I)<sup>t</sup></div></td><td>Any irregular stream; the definition of NPV.</td><td>0, 100, 300, 300, 300, 500 at 12% = <strong>$1,016.35</strong></td></tr>' +
+      '<tr><td><div class="formula">(4-12) FV = Σ CF<sub>t</sub>(1 + I)<sup>N−t</sup><br>or NFV = NPV(1 + I)<sup>N</sup></div></td><td>Terminal value of an irregular stream.</td><td>Same stream = <strong>$1,791.15</strong></td></tr>' +
+      '<tr><td><div class="formula">Annuity + final lump sum → use all five TVM keys</div></td><td>Bond-style streams (coupons plus face value).</td><td>5-yr 12% annuity of $100 + $1,000 = <strong>$927.90</strong> · <code>=PV(0.12,5,100,1000)</code></td></tr>' +
+      '<tr><td><div class="formula">IRR: the rate where PV of inflows = cost</div></td><td>Rate of return on an irregular investment; requires trial and error.</td><td>Same stream bought for $1,000 → IRR = <strong>12.55%</strong></td></tr>' +
+      '</table></div>' +
+      '<div class="tip"><strong>Two mechanical traps:</strong> (1) <strong>clear the cash flow register</strong> between problems — old flows persist and get added; (2) a calculator’s NPV <strong>includes</strong> CF<sub>0</sub>, but <strong>Excel’s NPV starts at Time 1</strong> so you must add CF<sub>0</sub> yourself — while Excel’s <strong>IRR does</strong> require Time 0.</div>' },
+
+    { title: 'Ch 4 — Compounding Periods, EFF%, and APR', html:
+      '<div class="tablewrap"><table>' +
+      '<tr><th style="width:34%">Equation</th><th style="width:30%">What it is used for</th><th>Worked example</th></tr>' +
+      '<tr><td><div class="formula">(4-13) I<sub>PER</sub> = I<sub>NOM</sub> ÷ M<br>Number of periods = N × M</div></td><td><strong>All</strong> calculations and time lines.</td><td>6% monthly → 0.5%/month. Never enter the nominal rate itself.</td></tr>' +
+      '<tr><td><div class="formula">(4-14) FV<sub>N</sub> = PV(1 + I<sub>NOM</sub>/M)<sup>M×N</sup></div></td><td>Lump sum with non-annual compounding.</td><td>$100 at 12% quarterly, 2 yrs = <strong>$126.68</strong></td></tr>' +
+      '<tr><td><div class="formula">(4-15) EFF% = (1 + I<sub>NOM</sub>/M)<sup>M</sup> − 1</div></td><td>Comparing loans/investments with DIFFERENT compounding frequencies.</td><td>12% quarterly = 12.5509%; 1%/month = 12.6825%; 18% APR monthly = <strong>19.56%</strong> · <code>=EFF(I_NOM,M)</code></td></tr>' +
+      '<tr><td><div class="formula">APR = I<sub>PER</sub> (computed from actual cash flows incl. fees) × M<br>True cost = (1 + I<sub>PER</sub>)<sup>M</sup> − 1</div></td><td>Comparing loans with different FEES (Truth in Lending).</td><td>$5,172.50 loan, $120 fee, $100 × 60 → 0.5817%/mo → APR <strong>6.98%</strong>, compounded <strong>7.21%</strong></td></tr>' +
+      '<tr><td><div class="formula">Add-on interest: total interest = Loan × quoted rate;<br>payment = (Loan + interest) ÷ M, first due immediately</div></td><td>Retail installment financing — an annuity due.</td><td>$3,000 at "8% add-on" → $270/mo → APR <strong>17.18%</strong>, EFF% <strong>18.59%</strong></td></tr>' +
+      '<tr><td><div class="formula">Fractional periods: FV = PV(1 + I<sub>PER</sub>)<sup>days</sup></div></td><td>Odd holding periods with daily compounding.</td><td>$100 at 10% daily for 274 days = <strong>$107.79</strong>; simple interest = $107.51</td></tr>' +
+      '</table></div>' +
+      '<div class="tip">EFF% exceeds the nominal rate whenever M &gt; 1; they are equal only under annual compounding. The biggest FV gain comes from annual → semiannual; monthly → daily adds little.</div>' },
+
+    { title: 'Ch 4 — Amortized Loans and Growing Annuities', html:
+      '<div class="tablewrap"><table>' +
+      '<tr><th style="width:34%">Equation</th><th style="width:30%">What it is used for</th><th>Worked example</th></tr>' +
+      '<tr><td><div class="formula">Payment: solve PVA<sub>N</sub> = Loan for PMT<br><code>=PMT(I, N, PV, FV)</code></div></td><td>Any installment loan.</td><td>$100,000 at 6%, 5 yrs = <strong>$23,739.64</strong>/yr</td></tr>' +
+      '<tr><td><div class="formula">Interest<sub>t</sub> = Beginning balance<sub>t</sub> × I<sub>PER</sub><br>Principal<sub>t</sub> = PMT − Interest<sub>t</sub><br>Ending balance = Beginning − Principal</div></td><td>Building an amortization schedule (final balance must be 0).</td><td>$100,000 over 60 monthly payments = $1,933.28; first payment = $500 interest + $1,433.28 principal</td></tr>' +
+      '<tr><td><div class="formula">Mortgage: convert to monthly (N × 12, I ÷ 12)</div></td><td>Home loans.</td><td>$250,000, 30 yrs, 6% → <strong>$1,498.88</strong>/mo · balance after 12 pmts $246,929.93 · year-1 interest $14,916.49 (≈83% of payments) · lifetime interest <strong>$289,597</strong> (15-yr: $129,736)</td></tr>' +
+      '<tr><td><div class="formula">(4-16) Real rate = [(1 + r<sub>NOM</sub>) ÷ (1 + Inflation)] − 1</div></td><td>Growing annuities — inflation-adjusted planning. A RATIO, not a subtraction.</td><td>6% nominal, 3% inflation = <strong>2.9126%</strong> (not 3%); 10% and 5% = 4.7619%</td></tr>' +
+      '<tr><td><div class="formula">Constant real income: solve annuity due at the REAL rate</div></td><td>Retirement withdrawals that keep pace with inflation.</td><td>$1M, 20 yrs, 6%/3% → first withdrawal <strong>$64,786.88</strong> today (or $68,674.09 at year-end)</td></tr>' +
+      '<tr><td><div class="formula">Future target in real dollars = Target ÷ (1 + Inflation)<sup>N</sup></div></td><td>Deposits growing with inflation to hit a future sum.</td><td>$100,000 in 10 yrs → real target $82,034.83 → initial deposit <strong>$6,598.87</strong></td></tr>' +
+      '</table></div>' +
+      '<div class="tip"><strong>Calculator checklist:</strong> 1 payment per period · End Mode (Begin only for annuities due, then switch back) · one cash flow negative · rates as percentages in TVM functions · zero out the unused variable · clear the CF register between irregular problems.</div>' },
 
     { title: 'Ch 2 — Self-Test Problem Template (Cole Furnaces)', html:
       '<div class="tablewrap"><table><tr><th>Given</th><th>Compute</th><th>Answer</th></tr>' +

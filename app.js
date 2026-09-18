@@ -9,7 +9,7 @@
             formulas: function () { return window.ECON_FORMULAS; }, sheetFile: 'econ-formula-sheet' },
     fin:  { name: 'Finance', sub: 'Corporate Finance (Ehrhardt & Brigham, 8e) — Chapters 2–4', tag: 'FIN', cls: 'fin', note: 'Financial statements, ratios, time value of money', hasExam: false,
             formulas: function () { return window.FIN_FORMULAS; }, sheetFile: 'fin-formula-sheet' },
-    fbook: { name: 'Finance Book', sub: 'Corporate Finance textbook chapters (Ehrhardt & Brigham) — built from the book, not the slides', tag: 'BOOK', cls: 'fbook', note: 'Ch 2–3 (course Ch 13–14); Ch 4 when added', hasExam: false,
+    fbook: { name: 'Finance Book', sub: 'Corporate Finance textbook chapters (Ehrhardt & Brigham) — built from the book, not the slides', tag: 'BOOK', cls: 'fbook', note: 'Ch 2–4 = course Ch 13–15 · complete', hasExam: false,
             formulas: function () { return window.FBOOK_FORMULAS; }, sheetFile: 'fbook-formula-sheet' }
   };
   var SUBJECT_ORDER = ['acct', 'econ', 'fin', 'fbook'];

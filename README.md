@@ -7,7 +7,7 @@ Interactive study site for Course 1 (Economics + Accounting): chapter notes, fla
 - **Economics** — Principles of Economics (Mankiw 10e): Chapters 1, 2, 4, 5, 15
 - **Accounting** — Accounting (Warren 29e): Chapters 1–4
 - **Finance** — Corporate Finance (Ehrhardt & Brigham 8e) slides: Chapters 2–4
-- **Finance Book** — Corporate Finance textbook chapters: Ch 2–3 (course Ch 13–14)
+- **Finance Book** — Corporate Finance textbook chapters: Ch 2–4 (course Ch 13–15)
 
 Original study content: notes, 148 flashcards, chapter quizzes, two 100-question practice banks (one per topic), and a 25-question randomized Accounting practice exam. Progress — notes read, flashcards mastered, best quiz scores — is saved privately in your browser via localStorage.
 
