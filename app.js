@@ -62,6 +62,8 @@
       renderPracticeHome();
     } else if (parts[0] === 'formulas' && SUBJECTS[parts[1]] && SUBJECTS[parts[1]].formulas) {
       renderFormulas(parts[1]);
+    } else if (parts[0] === 'problems') {
+      renderProblems();
     } else if (parts[0] === 'formulas') {
       renderFormulasHome();
     } else {
@@ -105,6 +107,8 @@
         '</a>' : '') +
       (s.formulas && s.formulas() ?
         '<a class="exam-cta ' + s.cls + '-cta" href="#/formulas/' + key + '">Formula Sheet — every equation, open-note test reference</a>' : '') +
+      ((key === 'fin' || key === 'fbook') && window.FIN_PROBLEMS ?
+        '<a class="exam-cta ' + s.cls + '-cta" href="#/problems">Problem Solver — ' + window.FIN_PROBLEMS.groups.reduce(function (t, g) { return t + g.problems.length; }, 0) + ' calculation problems worked step by step</a>' : '') +
       '</section>';
   }
 
@@ -439,6 +443,66 @@
       }).join('') +
       '</div>';
     document.getElementById('printSheet').addEventListener('click', function () { window.print(); });
+  }
+
+  /* ---------- problem solver ---------- */
+  function renderProblems() {
+    var P = window.FIN_PROBLEMS;
+    if (!P) { renderHome(null); return; }
+    var n = P.groups.reduce(function (a2, g) { return a2 + g.problems.length; }, 0);
+    var idx = 0;
+    var body = P.groups.map(function (g) {
+      return '<section class="note-section prob-group">' +
+        '<h3>' + esc(g.chapter) + '</h3>' +
+        (g.intro ? '<p class="prob-intro">' + esc(g.intro) + '</p>' : '') +
+        g.problems.map(function (p) {
+          var id = 'prob-' + (idx++);
+          return '<article class="prob" id="' + id + '">' +
+            '<div class="prob-topic">' + p.topic + '</div>' +
+            '<p class="prob-q">' + p.q + '</p>' +
+            '<button class="prob-btn" data-target="' + id + '">Show solution</button>' +
+            '<div class="prob-sol" hidden>' +
+            '<div class="prob-label">Formula</div>' +
+            '<div class="formula">' + p.formula + '</div>' +
+            '<div class="prob-label">Work</div>' +
+            '<ol class="prob-steps">' + p.steps.map(function (st) { return '<li>' + st + '</li>'; }).join('') + '</ol>' +
+            '<div class="prob-answer"><span class="prob-label">Answer</span>' + p.answer + '</div>' +
+            (p.note ? '<p class="prob-note">' + p.note + '</p>' : '') +
+            '</div></article>';
+        }).join('') +
+        '</section>';
+    }).join('');
+
+    app.innerHTML =
+      '<div class="fin-page">' +
+      '<p class="crumbs"><a href="#/">Home</a> › Problem Solver</p>' +
+      '<header class="ch-header">' +
+      '<span class="kicker fin-k">Finance · Calculation Practice</span>' +
+      '<h1>' + esc(P.title) + '</h1>' +
+      '<p class="overview">' + esc(P.intro) + '</p></header>' +
+      '<div class="sheet-actions">' +
+      '<button class="print-btn" id="toggleAll">Show all solutions</button>' +
+      '<button class="print-btn" id="printProblems" style="background:var(--ink)">Print</button>' +
+      '</div>' + body + '</div>';
+
+    app.querySelectorAll('.prob-btn').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var sol = document.getElementById(b.dataset.target).querySelector('.prob-sol');
+        sol.hidden = !sol.hidden;
+        b.textContent = sol.hidden ? 'Show solution' : 'Hide solution';
+      });
+    });
+    var shown = false;
+    document.getElementById('toggleAll').addEventListener('click', function () {
+      shown = !shown;
+      app.querySelectorAll('.prob-sol').forEach(function (s2) { s2.hidden = !shown; });
+      app.querySelectorAll('.prob-btn').forEach(function (b) { b.textContent = shown ? 'Hide solution' : 'Show solution'; });
+      this.textContent = shown ? 'Hide all solutions' : 'Show all solutions';
+    });
+    document.getElementById('printProblems').addEventListener('click', function () {
+      app.querySelectorAll('.prob-sol').forEach(function (s2) { s2.hidden = false; });
+      window.print();
+    });
   }
 
   /* ---------- reset ---------- */
