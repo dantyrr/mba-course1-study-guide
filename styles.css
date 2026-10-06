@@ -15,6 +15,8 @@
   --fin-dim:rgba(240,179,74,.12);
   --fbook:#b48cf2;
   --fbook-dim:rgba(180,140,242,.12);
+  --stat:#f2709c;
+  --stat-dim:rgba(242,112,156,.12);
   --accent:#2dd4a7;
   --good:#2dd4a7;
   --bad:#f0625d;
@@ -341,6 +343,17 @@ main{max-width:1080px;margin:0 auto;padding:40px 24px 88px}
 .exam-cta.fbook-cta{background:linear-gradient(90deg,var(--fbook),#cfb3f7)}
 .fbook-page .tab-btn.active{border-bottom-color:var(--fbook)}
 .fbook-page .print-btn{background:var(--fbook)}
+
+.stat .badge{background:var(--stat)}
+.stat .ch-num{color:var(--stat);border-color:rgba(242,112,156,.35);background:var(--stat-dim)}
+.pbar.stat-bar>div{background:linear-gradient(90deg,var(--stat),#f9a7c3)}
+.kicker.stat-k{background:var(--stat-dim);color:var(--stat);border:1px solid rgba(242,112,156,.25)}
+.stat-page .note-section .formula{color:var(--stat)}
+.stat-page .tip{background:var(--stat-dim);border-color:rgba(242,112,156,.25)}
+.exam-cta.stat-cta{background:linear-gradient(90deg,var(--stat),#f9a7c3)}
+.stat-page .tab-btn.active{border-bottom-color:var(--stat)}
+.stat-page .print-btn{background:var(--stat)}
+.stat-page .prob-group h3{color:var(--stat)}
 
 .ch-meta .alt-label{
   font-weight:700;color:var(--fbook);border:1px solid rgba(180,140,242,.35);

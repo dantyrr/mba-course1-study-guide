@@ -10,9 +10,19 @@
     fin:  { name: 'Finance', sub: 'Corporate Finance (Ehrhardt & Brigham, 8e) — Chapters 2–4', tag: 'FIN', cls: 'fin', note: 'Financial statements, ratios, time value of money', hasExam: false,
             formulas: function () { return window.FIN_FORMULAS; }, sheetFile: 'fin-formula-sheet' },
     fbook: { name: 'Finance Book', sub: 'Corporate Finance textbook chapters (Ehrhardt & Brigham) — built from the book, not the slides', tag: 'BOOK', cls: 'fbook', note: 'Ch 2–4 = course Ch 13–15 · complete', hasExam: false,
-            formulas: function () { return window.FBOOK_FORMULAS; }, sheetFile: 'fbook-formula-sheet' }
+            formulas: function () { return window.FBOOK_FORMULAS; }, sheetFile: 'fbook-formula-sheet' },
+    stat: { name: 'Statistics', sub: 'Statistics for Business and Economics (Anderson et al., 15e) — Chapters 2, 3, 4, 7, 9, 10', tag: 'STAT', cls: 'stat', note: 'Book Ch 2–10 = course Ch 19–24 · complete', hasExam: true,
+            formulas: function () { return window.STAT_FORMULAS; }, sheetFile: 'stat-formula-sheet', problems: 'stat' }
   };
-  var SUBJECT_ORDER = ['acct', 'econ', 'fin', 'fbook'];
+  var SUBJECT_ORDER = ['acct', 'econ', 'fin', 'fbook', 'stat'];
+  var PROBLEM_SETS = {
+    fin:  { get: function () { return window.FIN_PROBLEMS; }, cls: 'fin', kicker: 'Finance · Calculation Practice' },
+    stat: { get: function () { return window.STAT_PROBLEMS; }, cls: 'stat', kicker: 'Statistics · Calculation Practice' }
+  };
+  function problemCount(set) {
+    var P = PROBLEM_SETS[set] && PROBLEM_SETS[set].get();
+    return P ? P.groups.reduce(function (t, g) { return t + g.problems.length; }, 0) : 0;
+  }
   var EXAM_SIZE = 25;
   var app = document.getElementById('app');
 
@@ -62,8 +72,10 @@
       renderPracticeHome();
     } else if (parts[0] === 'formulas' && SUBJECTS[parts[1]] && SUBJECTS[parts[1]].formulas) {
       renderFormulas(parts[1]);
+    } else if (parts[0] === 'problems' && PROBLEM_SETS[parts[1]]) {
+      renderProblems(parts[1]);
     } else if (parts[0] === 'problems') {
-      renderProblems();
+      renderProblems('fin');
     } else if (parts[0] === 'formulas') {
       renderFormulasHome();
     } else {
@@ -108,7 +120,9 @@
       (s.formulas && s.formulas() ?
         '<a class="exam-cta ' + s.cls + '-cta" href="#/formulas/' + key + '">Formula Sheet — every equation, open-note test reference</a>' : '') +
       ((key === 'fin' || key === 'fbook') && window.FIN_PROBLEMS ?
-        '<a class="exam-cta ' + s.cls + '-cta" href="#/problems">Problem Solver — ' + window.FIN_PROBLEMS.groups.reduce(function (t, g) { return t + g.problems.length; }, 0) + ' calculation problems worked step by step</a>' : '') +
+        '<a class="exam-cta ' + s.cls + '-cta" href="#/problems">Problem Solver — ' + problemCount('fin') + ' calculation problems worked step by step</a>' : '') +
+      (s.problems && PROBLEM_SETS[s.problems] && PROBLEM_SETS[s.problems].get() ?
+        '<a class="exam-cta ' + s.cls + '-cta" href="#/problems/' + s.problems + '">Problem Solver — ' + problemCount(s.problems) + ' calculation problems worked step by step</a>' : '') +
       '</section>';
   }
 
@@ -446,10 +460,10 @@
   }
 
   /* ---------- problem solver ---------- */
-  function renderProblems() {
-    var P = window.FIN_PROBLEMS;
+  function renderProblems(set) {
+    var S = PROBLEM_SETS[set] || PROBLEM_SETS.fin;
+    var P = S.get();
     if (!P) { renderHome(null); return; }
-    var n = P.groups.reduce(function (a2, g) { return a2 + g.problems.length; }, 0);
     var idx = 0;
     var body = P.groups.map(function (g) {
       return '<section class="note-section prob-group">' +
@@ -474,10 +488,10 @@
     }).join('');
 
     app.innerHTML =
-      '<div class="fin-page">' +
+      '<div class="' + S.cls + '-page">' +
       '<p class="crumbs"><a href="#/">Home</a> › Problem Solver</p>' +
       '<header class="ch-header">' +
-      '<span class="kicker fin-k">Finance · Calculation Practice</span>' +
+      '<span class="kicker ' + S.cls + '-k">' + esc(S.kicker) + '</span>' +
       '<h1>' + esc(P.title) + '</h1>' +
       '<p class="overview">' + esc(P.intro) + '</p></header>' +
       '<div class="sheet-actions">' +
